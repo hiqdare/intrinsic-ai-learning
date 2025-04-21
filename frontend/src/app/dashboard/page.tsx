@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Sidebar, SidebarItem, SidebarSection } from '@/components/layout/Sidebar';
@@ -200,7 +201,7 @@ export default function Dashboard() {
               description="Lerne, wie du ein eigenes Unternehmen gründest und führst."
               progress={85}
               modules={8}
-              completedModules={6}
+              completed={6}
               image="/images/business.jpg"
               tags={["Business", "Entrepreneurship", "Finanzen"]}
             />
@@ -209,7 +210,7 @@ export default function Dashboard() {
               description="Verstehe und schütze deine digitale Identität in der vernetzten Welt."
               progress={42}
               modules={6}
-              completedModules={2}
+              completed={2}
               image="/images/digital-identity.jpg"
               tags={["Digital", "Privatsphäre", "Sicherheit"]}
             />
@@ -224,25 +225,27 @@ export default function Dashboard() {
               description="Entwickle und starte ein kleines Unternehmen für einen Monat."
               progress={65}
               category="Business"
-              difficulty="Mittel"
-              estimatedTime="10 Stunden"
+              difficulty="intermediate"
+              duration="10 Stunden"
+              status="in_progress"
             />
             <ModuleCard 
               title="Digitale Präsenz-Audit" 
               description="Analysiere deinen digitalen Fußabdruck und identifiziere Datenschutz-Schwachstellen."
               progress={100}
               category="Digital"
-              difficulty="Leicht"
-              estimatedTime="4 Stunden"
-              completed
+              difficulty="beginner"
+              duration="4 Stunden"
+              status="completed"
             />
             <ModuleCard 
               title="Nachhaltigkeits-Challenge" 
               description="Reduziere deinen ökologischen Fußabdruck für zwei Wochen und dokumentiere deine Erfahrungen."
               progress={90}
               category="Umwelt"
-              difficulty="Mittel"
-              estimatedTime="14 Tage"
+              difficulty="intermediate"
+              duration="14 Tage"
+              status="in_progress"
             />
           </div>
         </div>

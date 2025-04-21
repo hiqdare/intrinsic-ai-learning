@@ -1,12 +1,15 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export interface ModuleCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
-  status?: 'not_started' | 'in_progress' | 'completed';
+  status?: 'not_started' | 'in_progress' | 'completed'; 
+  progress?: number;
   duration?: string;
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  category?: 'Business' | 'Digital' | 'Umwelt';
   image?: string;
   tags?: string[];
 }
@@ -42,7 +45,7 @@ const ModuleCard = React.forwardRef<HTMLDivElement, ModuleCardProps>(
       >
         {image && (
           <div className="h-32 w-full overflow-hidden">
-            <img 
+            <Image 
               src={image} 
               alt={title} 
               className="w-full h-full object-cover"

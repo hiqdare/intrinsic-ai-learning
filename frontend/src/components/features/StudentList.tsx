@@ -1,10 +1,12 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export interface StudentListProps extends React.HTMLAttributes<HTMLDivElement> {
   students: Array<{
     id: string;
     name: string;
+    email?: string; // 👈 HIER HINZUFÜGEN
     avatar?: string;
     grade?: string;
     activeLearningPaths?: number;
@@ -61,7 +63,7 @@ const StudentList = React.forwardRef<HTMLDivElement, StudentListProps>(
                     <div className="flex items-center">
                       <div className="h-8 w-8 rounded-full overflow-hidden bg-muted mr-3">
                         {student.avatar ? (
-                          <img 
+                          <Image 
                             src={student.avatar} 
                             alt={student.name} 
                             className="h-full w-full object-cover"
@@ -72,7 +74,10 @@ const StudentList = React.forwardRef<HTMLDivElement, StudentListProps>(
                           </div>
                         )}
                       </div>
-                      <span className="font-medium">{student.name}</span>
+                      <p className="font-medium leading-tight">{student.name}</p>
+                      {student.email && (
+                        <p className="text-xs text-muted-foreground">{student.email}</p>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-sm">{student.grade || '-'}</td>

@@ -11,6 +11,12 @@ export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
   ({ className, defaultValue, value, onValueChange, children, ...props }, ref) => {
     const [selectedTab, setSelectedTab] = React.useState(value || defaultValue);
+
+    type TabsComponentProps = {
+      value: string;
+      selectedTab?: string;
+      onTabSelect?: (value: string) => void;
+    };
     
     React.useEffect(() => {
       if (value !== undefined) {
@@ -28,9 +34,9 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
     // Clone children and pass selected state
     const enhancedChildren = React.Children.map(children, child => {
       if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
+        return React.cloneElement(child as React.ReactElement<TabsComponentProps>, {
           selectedTab,
-          onSelect: handleTabChange,
+          onTabSelect: handleTabChange,
         });
       }
       return child;
@@ -52,17 +58,22 @@ Tabs.displayName = "Tabs";
 export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   selectedTab?: string;
-  onSelect?: (value: string) => void;
+  onTabSelect?: (value: string) => void;
+  //onSelect?: (value: string) => void;
 }
 
 const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
-  ({ className, children, selectedTab, onSelect, ...props }, ref) => {
+  ({ className, children, selectedTab, onTabSelect, ...props }, ref) => {
     // Clone children and pass selected state
     const enhancedChildren = React.Children.map(children, child => {
       if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
+        return React.cloneElement(child as React.ReactElement<{
+          value: string;
+          selected?: boolean;
+          onSelect?: (value: string) => void;
+        }>, {
           selected: selectedTab === child.props.value,
-          onSelect,
+          onSelect: onTabSelect,
         });
       }
       return child;
@@ -87,11 +98,11 @@ TabsList.displayName = "TabsList";
 export interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string;
   selected?: boolean;
-  onSelect?: (value: string) => void;
+  onTabSelect?: (value: string) => void;
 }
 
 const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
-  ({ className, value, selected, onSelect, children, ...props }, ref) => {
+  ({ className, value, selected, onTabSelect, children, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -102,7 +113,7 @@ const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
             : "text-muted-foreground hover:bg-background/50 hover:text-foreground",
           className
         )}
-        onClick={() => onSelect?.(value)}
+        onClick={() => onTabSelect?.(value)}
         {...props}
       >
         {children}

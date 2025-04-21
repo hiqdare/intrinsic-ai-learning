@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Sidebar, SidebarItem, SidebarSection } from '@/components/layout/Sidebar';
@@ -63,8 +64,11 @@ export default function CoachDashboard() {
           <CoachDashboardCard 
             title="Aktive Schüler" 
             value="24" 
-            change="+2"
-            description="Seit letztem Monat"
+            trend={{
+              value: 2,
+              label: "Seit letzter Monat",
+              positive: true
+            }}
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -78,8 +82,11 @@ export default function CoachDashboard() {
           <CoachDashboardCard 
             title="Offene Projekte" 
             value="18" 
-            change="-3"
-            description="Seit letzter Woche"
+            trend={{
+              value: -3,
+              label: "Seit letzter Woche",
+              positive: false
+            }}
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
@@ -91,8 +98,11 @@ export default function CoachDashboard() {
           <CoachDashboardCard 
             title="Durchschnittlicher Fortschritt" 
             value="72%" 
-            change="+5%"
-            description="Seit letztem Monat"
+            trend={{
+              value: -5,
+              label: "Seit letztem Monat",
+              positive: false, // weil es abgenommen hat
+            }}
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>

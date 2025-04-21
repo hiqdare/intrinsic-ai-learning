@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export interface StudentProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -38,7 +39,7 @@ const StudentProfileCard = React.forwardRef<HTMLDivElement, StudentProfileCardPr
           <div className="flex items-center">
             <div className="h-16 w-16 rounded-full overflow-hidden bg-muted">
               {avatar ? (
-                <img 
+                <Image 
                   src={avatar} 
                   alt={name} 
                   className="h-full w-full object-cover"

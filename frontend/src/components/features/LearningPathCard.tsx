@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export interface LearningPathCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -24,7 +25,7 @@ const LearningPathCard = React.forwardRef<HTMLDivElement, LearningPathCardProps>
       >
         {image && (
           <div className="h-32 w-full overflow-hidden">
-            <img 
+            <Image 
               src={image} 
               alt={title} 
               className="w-full h-full object-cover"
