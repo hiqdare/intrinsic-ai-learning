@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import { Schema, model } from 'mongoose';
+import { argon2id, hash, verify } from 'argon2';
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true
@@ -43,11 +43,11 @@ const UserSchema = new mongoose.Schema({
   }],
   interests: [String],
   learningPaths: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'LearningPath'
   }],
   completedModules: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Module'
   }]
 });
@@ -61,8 +61,15 @@ UserSchema.pre('save', async function(next) {
   try {
     // Only hash the password if it doesn't start with 'google-oauth-'
     if (!this.password.startsWith('google-oauth-')) {
-      const salt = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, salt);
+      // Argon2 configuration options
+      const options = {
+        type: argon2id, // Recommended type for general use
+        memoryCost: 2**16,     // 64 MiB memory cost
+        timeCost: 3,           // 3 iterations
+        parallelism: 1         // 1 degree of parallelism
+      };
+      
+      this.password = await hash(this.password, options);
     }
     next();
   } catch (error) {
@@ -77,10 +84,12 @@ UserSchema.methods.comparePassword = async function(candidatePassword) {
     if (this.password.startsWith('google-oauth-')) {
       return false;
     }
-    return await bcrypt.compare(candidatePassword, this.password);
+    
+    return await verify(this.password, candidatePassword);
+
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = mongoose.model('User', UserSchema);
+export default model('User', UserSchema);

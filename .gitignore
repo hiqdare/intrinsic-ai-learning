@@ -1,0 +1,44 @@
+# Node modules
+backend/node_modules/
+frontend/node_modules/
+
+# Logs
+npm-debug.log*
+
+# Environment variables
+backend/.env
+frontend/.env
+
+# Build outputs
+backend/dist/
+frontend/dist/
+frontend/.next/   # Falls du Next.js benutzt
+
+# Test outputs
+backend/coverage/
+frontend/coverage/
+
+# Docker artifacts
+.dockerignore
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Temporary files
+*.swp
+*.swo
+
+# Ignore local build artifacts
+*.local
+
+# Optional: Ignore test files (if you don't want to version them)
+# backend/**/*.test.*
+# frontend/**/*.test.*
+
+# Optional: Ignore Azure DevOps config files if they are generated
+# .azure-pipelines/

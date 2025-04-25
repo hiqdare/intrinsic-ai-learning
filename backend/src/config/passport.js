@@ -1,15 +1,17 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/User');
-const googleOAuth = require('../config/googleOAuth');
+import passport, { serializeUser, deserializeUser, use } from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import User from '../models/User';
+import { clientID as _clientID, clientSecret as _clientSecret, callbackURL as _callbackURL, scope as _scope, hostedDomain as _hostedDomain, validateDomain } from '../config/googleOAuth';
+require('dotenv').config();
+
 
 // Serialize user for session
-passport.serializeUser((user, done) => {
+serializeUser((user, done) => {
   done(null, user.id);
 });
 
 // Deserialize user from session
-passport.deserializeUser(async (id, done) => {
+deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
     done(null, user);
@@ -19,19 +21,19 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Configure Google Strategy
-passport.use(new GoogleStrategy({
-  clientID: googleOAuth.clientID,
-  clientSecret: googleOAuth.clientSecret,
-  callbackURL: googleOAuth.callbackURL,
-  scope: googleOAuth.scope,
-  hostedDomain: googleOAuth.hostedDomain
+use(new GoogleStrategy({
+  clientID: _clientID,
+  clientSecret: _clientSecret,
+  callbackURL: _callbackURL,
+  scope: _scope,
+  hostedDomain: _hostedDomain
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Extract email from profile
     const email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
     
     // Validate email domain
-    if (!email || !googleOAuth.validateDomain(email)) {
+    if (!email || !validateDomain(email)) {
       return done(null, false, { message: 'Nur E-Mails mit der Domain yiagency.ch sind zugelassen.' });
     }
     
@@ -66,4 +68,4 @@ passport.use(new GoogleStrategy({
   }
 }));
 
-module.exports = passport;
+export default passport;
