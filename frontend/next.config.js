@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone', // ✅ Wichtig für Docker-Build!
+  output: 'standalone',
+  experimental: {
+    appDir: true,
+  },
 };
 
 module.exports = nextConfig;

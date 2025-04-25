@@ -11,8 +11,6 @@
   "dependencies": {
     "-": "^0.0.1",
     "@geist-ui/core": "^2.3.8",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/postcss": "^4.1.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.0.0",

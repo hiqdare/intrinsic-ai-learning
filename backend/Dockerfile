@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:23-slim
 
 WORKDIR /app
 
@@ -12,8 +12,8 @@ RUN npm ci
 COPY . .
 
 # Set environment variables
-ENV NODE_ENV production
-ENV PORT 5000
+ENV NODE_ENV=production
+ENV PORT=5000
 
 # Expose the port the app will run on
 EXPOSE 5000
